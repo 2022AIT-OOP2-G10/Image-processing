@@ -4,7 +4,7 @@ photo = 'upload_img/25390.jpg'
 
 def faceframe(src):
 
-    face_cascade_path = '/Users/k21072kk/.pyenv/versions/3.10.6/lib/python3.10/site-packages/cv2/data/haarcascade_frontalface_default.xml'
+    face_cascade_path = 'site-packages/haarcascade_frontalface_default.xml'
     face_cascade = cv2.CascadeClassifier(face_cascade_path)
 
     photo = cv2.imread(src)
