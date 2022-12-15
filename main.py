@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 import cv2
+import numpy as np
 photo = 'upload_img/25390.jpg'
 
 def faceframe(src):
@@ -24,9 +25,20 @@ def grayscale(src):
 
     # 画像保存
     cv2.imwrite('result_img/gray_img/gray.jpg',gray_img)
+
+def outline(src):
+    # グレースケール変換
+    gray = cv2.imread(src,cv2.IMREAD_GRAYSCALE)
+
+    # Cannyフィルター
+    dst = cv2.Canny(gray, 100, 200)
+
+    # 結果を出力
+    cv2.imwrite('result_img/outline_img/doraemon_filter.png', dst)
     
 faceframe(photo)
 grayscale(photo)
+outline(photo)
 
 
 
