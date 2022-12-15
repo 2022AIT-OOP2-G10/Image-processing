@@ -17,7 +17,16 @@ def faceframe(src):
         
     cv2.imwrite('result_img/faceframe_img/253902.jpg', photo)
 
+def grayscale(src): 
+    # 画像読み込みとグレースケール
+    gray_img = cv2.imread(src,cv2.IMREAD_GRAYSCALE)
+
+
+    # 画像保存
+    cv2.imwrite('result_img/gray_img/gray.jpg',gray_img)
+    
 faceframe(photo)
+grayscale(photo)
 
 
 
