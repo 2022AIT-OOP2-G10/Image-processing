@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask, request, render_template
+import os
 
 app = Flask(__name__)
 
@@ -12,6 +13,8 @@ def home_get():
 # 画像をアップロードするとき
 @app.route('/', methods=["POST"])
 def home_post():
+    file = request.files['file']
+    file.save(os.path.join('./upload_img', file.filename))
     return render_template('index.html')
 
 # アップロードした画像を表示

@@ -17,7 +17,7 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li  class="nav-item"> 
-            <a  class="nav-link" href="http://localhost:8888/upload/">アップロード画像</a>
+            <a  class="nav-link" href="http://127.0.0.1:5000/upload/">アップロード画像</a>
           </li>
         </ul>
       </div>    
@@ -26,13 +26,13 @@
 
 </header>
 <main>
-  <div class="form-group w-75 p-3 text-center">
-    <div class="custom-file">
-      <input type="file" class="custom-file-input" id="inputFile" name="example" accept="image/jpeg, image/png">
-      <label class="custom-file-label" for="inputFile">アップロードする画像ファイルを選んでください</label>
-    </div>
+  <form action="http://127.0.0.1:5000/" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+      <input type="file" class="form-control-file" id="inputFile" name="file" accept="image/jpeg, image/png">
+      <label for="inputFile">アップロードする画像ファイルを選んでください</label>
   </div>
-  <button id="add-submit" class="btn btn-primary ml-3">Add</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
   <div id="message-container" role="alert" style="display: none;"></div>
 </main>
 </body>
