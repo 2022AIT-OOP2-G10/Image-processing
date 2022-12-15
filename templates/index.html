@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
   <header>
-    <h1>画像処理</h1>
-  <li> <a href="http://localhost:8888/upload/">アップロード画像</a></li>
-  
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">画像処理アプリ</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li  class="nav-item"> 
+            <a  class="nav-link" href="http://localhost:8888/upload/">アップロード画像</a>
+          </li>
+        </ul>
+      </div>    
+      </div>
+    </nav> 
+
 </header>
   <input type="file" name="example" accept="image/jpeg, image/png">
-  <button id="add-submit">Add</button>
+  <button id="add-submit"  class="btn btn-primary" >Add</button>
   <div id="message-container" role="alert" style="display: none;"></div>
 </body>
 </html>
