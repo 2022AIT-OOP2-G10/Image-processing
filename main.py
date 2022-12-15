@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, request, render_template
 import os
+import glob
 
 app = Flask(__name__)
 
@@ -20,7 +21,43 @@ def home_post():
 # アップロードした画像を表示
 @app.route('/upload')
 def upload():
-    return render_template('index.html')
+    return render_template('show_img.html')
+
+@app.route('/gray')
+def gray():
+    files = glob.glob("./gray_img")
+    urls = []
+    for file in files:
+        urls.append({
+            "filename": os.path.basename(file),
+            "url": "/processed/gs/" + os.path.basename(file)
+        })
+    return render_template("show_img.html", target_files=urls)
+
+
+@app.route('/faceframe')
+def faceframe():
+    files = glob.glob("./faceframe_img")
+    app.logger.info(files)
+    urls = []
+    for file in files:
+        urls.append({
+            "filename": os.path.basename(file),
+            "url": "/processed/gs/" + os.path.basename(file)
+        })
+    return render_template("show_img.html", target_files=urls)
+
+  
+@app.route('/outline')
+def outline():
+    files = glob.glob("./outline_img")
+    urls = []
+    for file in files:
+        urls.append({
+            "filename": os.path.basename(file),
+            "url": "/processed/gs/" + os.path.basename(file)
+        })
+    return render_template("show_img.html", target_files=urls)
 
 
 if __name__ == '__main__':
