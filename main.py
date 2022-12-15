@@ -5,7 +5,7 @@ app = Flask(__name__)
 #ホーム画面
 @app.route('/', methods=["GET"])
 def home_get():
-    return render_template('index.html')
+    return render_template('upload_list.html')
   
 # 画像をアップロードするとき
 @app.route('/', methods=["POST"])
