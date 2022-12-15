@@ -19,6 +19,9 @@ Webインターフェースを持つ画像処理システム
 <pre>
  ―┬― README.md
 　├― main.py
+  ├―templates
+  |        └― ~~.html
+  ├―static
 　├― upload_img 
 　｜　　　　 └― ここに画像アップロード
 　└― result_img 
