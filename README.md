@@ -22,6 +22,7 @@ Webインターフェースを持つ画像処理システム
   ├―templates
   |        └― ~~.html
   ├―static
+  |        └― ~~.js
 　├― upload_img 
 　｜　　　　 └― ここに画像アップロード
 　└― result_img 
@@ -29,6 +30,6 @@ Webインターフェースを持つ画像処理システム
            |      └― ここに画像アップロード
            ├―outline_img
            |       └― ここに画像アップロード
-           └―frame_img
+           └―faceframe_img
                    └― ここに画像アップロード
 </pre>
