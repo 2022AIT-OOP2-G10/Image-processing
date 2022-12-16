@@ -37,13 +37,17 @@
 </header>
 <main class="text-center">
   <form action="http://127.0.0.1:5000/" method="POST" enctype="multipart/form-data">
-  <div class="form-group pt-5 pb-3">
+  <div class="form-group mt-5">
       <label for="inputFile">アップロードする画像ファイルを選んでください</label>
       <input type="file" class="form-control-file mx-auto" id="inputFile" name="file" accept="image/jpeg, image/png">
   </div>
-  <button type="submit" class="btn btn-primary">アップロードする</button>
+  <button type="submit" class="btn btn-primary m-3">アップロードする</button>
 </form>
-  <div id="message-container" role="alert" style="display: none;"></div>
+    {% if message %}
+    <div class="alert {% if message=="アップロード成功" %}alert-success{% else %}alert alert-danger{% endif %}" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
 </main>
 </body>
 </html>

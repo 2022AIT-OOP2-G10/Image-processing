@@ -3,6 +3,7 @@
 from flask import Flask, request, render_template, send_from_directory
 import os
 import glob
+from werkzeug.utils import secure_filename
 
 import cv2
 import numpy as np
@@ -58,14 +59,24 @@ app = Flask(__name__)
 #ホーム画面
 @app.route('/', methods=["GET"])
 def home_get():
-    return render_template('index.html')
+    return render_template('index.html', message=None)
   
 # 画像をアップロードするとき
 @app.route('/', methods=["POST"])
 def home_post():
+    # ファイルがなかった場合の処理
+    if 'file' not in request.files:
+        return render_template('index.html', message="画像ファイルを登録してください")
+    # データの取り出し
     file = request.files['file']
-    file.save(os.path.join('./upload_img', file.filename))
-    return render_template('index.html')
+    # ファイル名がなかった時の処理
+    if file.filename == '':
+        return render_template('index.html', message="画像ファイルを登録してください")
+    file = request.files['file']
+    # 危険な文字を削除（サニタイズ処理）
+    filename = secure_filename(file.filename)
+    file.save(os.path.join('./upload_img', filename))
+    return render_template('index.html', message="アップロード成功")
 
 # アップロードした画像を一覧表示
 @app.route('/upload')
