@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
 import os
 import glob
+from werkzeug.utils import secure_filename
 
 import cv2
 import numpy as np
@@ -41,9 +42,9 @@ def outline(src):
     # 結果を出力
     cv2.imwrite('result_img/outline_img/doraemon_filter.png', dst)
     
-faceframe(photo)
-grayscale(photo)
-outline(photo)
+# faceframe(photo)
+# grayscale(photo)
+# outline(photo)
 
 
 
@@ -58,56 +59,95 @@ app = Flask(__name__)
 #ホーム画面
 @app.route('/', methods=["GET"])
 def home_get():
-    return render_template('index.html')
+    return render_template('index.html', message=None)
   
 # 画像をアップロードするとき
 @app.route('/', methods=["POST"])
 def home_post():
+    # ファイルがなかった場合の処理
+    if 'file' not in request.files:
+        return render_template('index.html', message="画像ファイルを登録してください")
+    # データの取り出し
     file = request.files['file']
-    file.save(os.path.join('./upload_img', file.filename))
-    return render_template('index.html')
+    # ファイル名がなかった時の処理
+    if file.filename == '':
+        return render_template('index.html', message="画像ファイルを登録してください")
+    file = request.files['file']
+    # 危険な文字を削除（サニタイズ処理）
+    filename = secure_filename(file.filename)
+    file.save(os.path.join('./upload_img', filename))
+    return render_template('index.html', message="アップロード成功")
 
-# アップロードした画像を表示
+# アップロードした画像を一覧表示
 @app.route('/upload')
 def upload():
-    return render_template('show_img.html')
-
-@app.route('/gray')
-def gray():
-    files = glob.glob("./gray_img")
+    # upload_img直下のファイルを全て取得する
+    files = glob.glob("upload_img/*")
+    # 画像ファイルへのパス
     urls = []
     for file in files:
         urls.append({
             "filename": os.path.basename(file),
-            "url": "/processed/gs/" + os.path.basename(file)
+            "url": "/upload/" + os.path.basename(file)
         })
     return render_template("show_img.html", target_files=urls)
 
+# 画像を表示
+@app.route('/upload/<path:filename>')
+def upload_show(filename):
+    return send_from_directory('./upload_img', filename)
 
+# グレースケール画像を一覧表示
+@app.route('/gray')
+def gray():
+    files = glob.glob("result_img/gray_img/*")
+    urls = []
+    for file in files:
+        urls.append({
+            "filename": os.path.basename(file),
+            "url": "/gray/" + os.path.basename(file)
+        })
+    return render_template("show_img.html", target_files=urls)
+
+# 画像を表示
+@app.route('/gray/<path:filename>')
+def gray_show(filename):
+    return send_from_directory('./result_img/gray_img', filename)
+
+# 顔枠画像を一覧表示
 @app.route('/faceframe')
 def faceframe():
-    files = glob.glob("./faceframe_img")
+    files = glob.glob("./result_img/faceframe_img/*")
     app.logger.info(files)
     urls = []
     for file in files:
         urls.append({
             "filename": os.path.basename(file),
-            "url": "/processed/gs/" + os.path.basename(file)
+            "url": "/faceframe/" + os.path.basename(file)
         })
     return render_template("show_img.html", target_files=urls)
 
-  
+# 画像を表示
+@app.route('/faceframe/<path:filename>')
+def faceframe_show(filename):
+    return send_from_directory('./result_img/faceframe_img', filename)
+
+# アウトライン画像を一覧表示
 @app.route('/outline')
 def outline():
-    files = glob.glob("./outline_img")
+    files = glob.glob("./result_img/outline_img/*")
     urls = []
     for file in files:
         urls.append({
             "filename": os.path.basename(file),
-            "url": "/processed/gs/" + os.path.basename(file)
+            "url": "/outline/" + os.path.basename(file)
         })
     return render_template("show_img.html", target_files=urls)
 
+# 画像を表示
+@app.route('/outline/<path:filename>')
+def outline_show(filename):
+    return send_from_directory('./result_img/outline_img', filename)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
