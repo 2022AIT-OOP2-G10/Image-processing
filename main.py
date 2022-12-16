@@ -41,9 +41,9 @@ def outline(src):
     # 結果を出力
     cv2.imwrite('result_img/outline_img/doraemon_filter.png', dst)
     
-faceframe(photo)
-grayscale(photo)
-outline(photo)
+# faceframe(photo)
+# grayscale(photo)
+# outline(photo)
 
 
 
