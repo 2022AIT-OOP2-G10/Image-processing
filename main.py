@@ -21,11 +21,19 @@ def home_post():
 # アップロードした画像を表示
 @app.route('/upload')
 def upload():
-    return render_template('show_img.html')
+    files = glob.glob("upload_img/*")
+    urls = []
+    for file in files:
+        urls.append({
+            "filename": os.path.basename(file),
+            "url": "../upload_img/" + os.path.basename(file)
+        })
+    app.logger.info(urls)
+    return render_template("show_img.html", target_files=urls)
 
 @app.route('/gray')
 def gray():
-    files = glob.glob("./gray_img")
+    files = glob.glob("result_img/gray_img/*")
     urls = []
     for file in files:
         urls.append({
@@ -37,7 +45,7 @@ def gray():
 
 @app.route('/faceframe')
 def faceframe():
-    files = glob.glob("./faceframe_img")
+    files = glob.glob(".result_img//faceframe_img/*")
     app.logger.info(files)
     urls = []
     for file in files:
@@ -50,7 +58,7 @@ def faceframe():
   
 @app.route('/outline')
 def outline():
-    files = glob.glob("./outline_img")
+    files = glob.glob(".result_img//outline_img/*")
     urls = []
     for file in files:
         urls.append({
@@ -61,4 +69,4 @@ def outline():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
